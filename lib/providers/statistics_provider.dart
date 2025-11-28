@@ -1,0 +1,117 @@
+import 'package:flutter/material.dart';
+import '../models/stats_model.dart';
+import '../services/statistics_service.dart';
+
+class StatisticsProvider with ChangeNotifier {
+  final StatisticsService _statisticsService = StatisticsService();
+  
+  // THIS MONTH STATISTICS
+  double _totalExpense = 0.0;
+  List<CategoryExpense> _categories = [];
+  
+  // YEAR REPORT DATA
+  List<MonthlyData> _yearMonthlyData = [];
+  List<CategoryExpense> _yearCategories = [];
+  double _yearTotalIncome = 0.0;
+  double _yearTotalExpense = 0.0;
+  
+  bool _isLoading = false;
+  String? _errorMessage;
+
+  // Getters - THIS MONTH
+  double get totalExpense => _totalExpense;
+  List<CategoryExpense> get categories => _categories;
+  
+  // Getters - YEAR REPORT
+  List<MonthlyData> get yearMonthlyData => _yearMonthlyData;
+  List<CategoryExpense> get yearCategories => _yearCategories;
+  double get yearTotalIncome => _yearTotalIncome;
+  double get yearTotalExpense => _yearTotalExpense;
+  
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
+
+  /// 📊 LOAD THIS MONTH STATISTICS (Pie Chart)
+  Future<void> loadThisMonthStats(List expenses) async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      print('📊 Loading this month statistics...');
+      
+      final response = await _statisticsService.getThisMonthStats(expenses);
+      
+      if (response.success && response.data != null) {
+        _totalExpense = response.data!['totalExpense'] ?? 0.0;
+        _categories = response.data!['categories'] ?? [];
+        
+        print('✅ Month stats: ${_categories.length} categories, ₹$_totalExpense');
+        _errorMessage = null;
+      } else {
+        _errorMessage = response.message ?? 'Failed to load statistics';
+        print('❌ Month stats failed: $_errorMessage');
+      }
+    } catch (e) {
+      _errorMessage = 'Error loading statistics: ${e.toString()}';
+      print('❌ StatisticsProvider error: $e');
+    }
+
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  /// 📈 LOAD YEAR REPORT DATA
+  Future<void> loadYearReport(List incomes, List expenses) async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      print('📈 Loading year report...');
+      
+      final response = await _statisticsService.getYearReportData(incomes, expenses);
+      
+      if (response.success && response.data != null) {
+        _yearMonthlyData = response.data!['monthlyData'] ?? [];
+        _yearCategories = response.data!['categories'] ?? [];
+        _yearTotalIncome = response.data!['totalIncome'] ?? 0.0;
+        _yearTotalExpense = response.data!['totalExpense'] ?? 0.0;
+        
+        print('✅ Year report: ${_yearMonthlyData.length} months, ${_yearCategories.length} categories');
+        _errorMessage = null;
+      } else {
+        _errorMessage = response.message ?? 'Failed to load year report';
+        print('❌ Year report failed: $_errorMessage');
+      }
+    } catch (e) {
+      _errorMessage = 'Error loading year report: ${e.toString()}';
+      print('❌ StatisticsProvider loadYearReport error: $e');
+    }
+
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  /// 🔄 REFRESH MONTH STATS
+  Future<void> refreshMonth(List expenses) async {
+    await loadThisMonthStats(expenses);
+  }
+
+  /// 🔄 REFRESH YEAR REPORT
+  Future<void> refreshYear(List incomes, List expenses) async {
+    await loadYearReport(incomes, expenses);
+  }
+
+  /// 🗑️ CLEAR DATA (on logout)
+  void clearData() {
+    _totalExpense = 0.0;
+    _categories = [];
+    _yearMonthlyData = [];
+    _yearCategories = [];
+    _yearTotalIncome = 0.0;
+    _yearTotalExpense = 0.0;
+    _errorMessage = null;
+    notifyListeners();
+  }
+}
