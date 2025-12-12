@@ -23,9 +23,7 @@ class ThemeProvider extends ChangeNotifier {
       _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
       _isLoading = false;
       notifyListeners();
-      debugPrint('✅ Theme loaded: ${isDark ? "Dark" : "Light"} mode');
     } catch (e) {
-      debugPrint('❌ Error loading theme preference: $e');
       _themeMode = ThemeMode.light; // Default to light on error
       _isLoading = false;
       notifyListeners();
@@ -37,7 +35,6 @@ class ThemeProvider extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_themeKey, isDark);
-      debugPrint('💾 Theme saved: ${isDark ? "Dark" : "Light"} mode');
     } catch (e) {
       debugPrint('❌ Error saving theme preference: $e');
     }
@@ -84,7 +81,6 @@ class ThemeProvider extends ChangeNotifier {
       await prefs.remove(_themeKey);
       _themeMode = ThemeMode.light;
       notifyListeners();
-      debugPrint('🗑️ Theme preference cleared');
     } catch (e) {
       debugPrint('❌ Error clearing theme preference: $e');
     }

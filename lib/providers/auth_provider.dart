@@ -41,8 +41,6 @@ class AuthProvider with ChangeNotifier {
           await prefs.setString(AppConfig.userIdKey, _user!.id);
           await prefs.setString(AppConfig.userNameKey, _user!.name);
           await prefs.setString(AppConfig.userEmailKey, _user!.email);
-          
-          print('✅ User profile loaded: ${_user!.name}');
         } catch (e) {
           // If profile fetch fails, try loading from local storage
           final userId = prefs.getString(AppConfig.userIdKey);
@@ -57,9 +55,7 @@ class AuthProvider with ChangeNotifier {
               isVerified: true,
               createdAt: DateTime.now(),
             );
-            print('✅ User loaded from storage: ${_user!.name}');
           } else {
-            print('⚠️ Profile fetch failed and no local data');
             _token = null;
           }
         }
@@ -147,9 +143,8 @@ class AuthProvider with ChangeNotifier {
         try {
           _user = await _authService.getProfile();
           await _saveAuthData();
-          print('✅ Profile fetched after OTP: ${_user!.name}');
         } catch (e) {
-          print('⚠️ Could not fetch profile after OTP: $e');
+          debugPrint('⚠️ Could not fetch profile after OTP: $e');
         }
         
         _successMessage = response.message ?? 'Account verified successfully';
@@ -187,9 +182,8 @@ class AuthProvider with ChangeNotifier {
         try {
           _user = await _authService.getProfile();
           await _saveAuthData();
-          print('✅ Profile fetched after login: ${_user!.name}');
         } catch (e) {
-          print('❌ Failed to fetch profile: $e');
+          debugPrint('❌ Failed to fetch profile: $e');
           _errorMessage = 'Login successful but could not load profile';
           _isLoading = false;
           notifyListeners();
@@ -297,7 +291,6 @@ class AuthProvider with ChangeNotifier {
       await prefs.setString(AppConfig.userIdKey, _user!.id);
       await prefs.setString(AppConfig.userNameKey, _user!.name);
       await prefs.setString(AppConfig.userEmailKey, _user!.email);
-      print('💾 Saved user data - Name: ${_user!.name}, Email: ${_user!.email}');
     }
   }
 

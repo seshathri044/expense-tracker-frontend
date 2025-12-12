@@ -33,8 +33,6 @@ class Income {
         createdAt: _safeDate(json['createdAt']),
       );
     } catch (e) {
-      print('❌ Error parsing Income: $e');
-      print('📦 JSON data: $json');
       // Return default income on error
       return Income(
         id: '',
@@ -72,7 +70,6 @@ class Income {
       try {
         return double.parse(value);
       } catch (e) {
-        print('⚠️ Error parsing double from string: $value');
         return 0.0;
       }
     }
@@ -87,7 +84,6 @@ class Income {
       try {
         return DateTime.parse(value);
       } catch (e) {
-        print('⚠️ Error parsing date from string: $value');
         return DateTime.now();
       }
     }

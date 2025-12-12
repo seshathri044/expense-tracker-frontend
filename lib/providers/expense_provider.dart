@@ -1,3 +1,5 @@
+// lib/providers/expense_provider.dart
+
 import 'package:flutter/material.dart';
 import '../models/expense_model.dart';
 import '../services/expense_service.dart';
@@ -52,7 +54,6 @@ class ExpenseProvider with ChangeNotifier {
       }
     } catch (e) {
       _errorMessage = e.toString();
-      print('ExpenseProvider getExpenses error: $e');
     }
 
     _isLoading = false;
@@ -100,7 +101,6 @@ class ExpenseProvider with ChangeNotifier {
       }
     } catch (e) {
       _errorMessage = e.toString();
-      print('ExpenseProvider addExpense error: $e');
       _isLoading = false;
       notifyListeners();
       return false;
@@ -146,7 +146,6 @@ class ExpenseProvider with ChangeNotifier {
       }
     } catch (e) {
       _errorMessage = e.toString();
-      print('ExpenseProvider updateExpense error: $e');
       _isLoading = false;
       notifyListeners();
       return false;
@@ -175,7 +174,6 @@ class ExpenseProvider with ChangeNotifier {
       }
     } catch (e) {
       _errorMessage = e.toString();
-      print('ExpenseProvider deleteExpense error: $e');
       _isLoading = false;
       notifyListeners();
       return false;
@@ -198,7 +196,6 @@ class ExpenseProvider with ChangeNotifier {
       }
     } catch (e) {
       _errorMessage = e.toString();
-      print('ExpenseProvider getExpensesByDateRange error: $e');
     }
 
     _isLoading = false;

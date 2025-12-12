@@ -34,6 +34,8 @@ dependencies:
   
   # File System (Required for path_provider)
   path_provider: ^2.1.4
+  #permission handler
+  permission_handler: ^11.3.0  # ✅ Add this
 
 dev_dependencies:
   flutter_test:

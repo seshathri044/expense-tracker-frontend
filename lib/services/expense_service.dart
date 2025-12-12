@@ -1,3 +1,5 @@
+// lib/services/expense_service.dart
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,9 +33,6 @@ class ExpenseService {
         headers: _getHeaders(token),
       );
 
-      print('📥 Get expenses response: ${response.statusCode}');
-      print('📦 Response body: ${response.body}');
-
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         
@@ -52,7 +51,6 @@ class ExpenseService {
               try {
                 return Expense.fromJson(json);
               } catch (e) {
-                print('❌ Error parsing expense: $e');
                 return null;
               }
             })
@@ -70,7 +68,6 @@ class ExpenseService {
         );
       }
     } catch (e) {
-      print('❌ Get expenses error: $e');
       return ApiResponse.error(
         message: 'Network error: ${e.toString()}',
       );
@@ -96,16 +93,11 @@ class ExpenseService {
         if (notes != null) 'notes': notes,
       };
 
-      print('📤 Add expense request: $requestBody');
-
       final response = await http.post(
         Uri.parse('$baseUrl${AppConfig.expenseEndpoint}'),
         headers: _getHeaders(token),
         body: jsonEncode(requestBody),
       );
-
-      print('📥 Add expense response: ${response.statusCode}');
-      print('📦 Response body: ${response.body}');
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -124,7 +116,6 @@ class ExpenseService {
         );
       }
     } catch (e) {
-      print('❌ Add expense error: $e');
       return ApiResponse.error(
         message: 'Network error: ${e.toString()}',
       );
@@ -151,15 +142,11 @@ class ExpenseService {
         if (notes != null) 'notes': notes,
       };
 
-      print('📤 Update expense request: $requestBody');
-
       final response = await http.put(
         Uri.parse('$baseUrl${AppConfig.expenseEndpoint}/$id'),
         headers: _getHeaders(token),
         body: jsonEncode(requestBody),
       );
-
-      print('📥 Update expense response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -176,7 +163,6 @@ class ExpenseService {
         );
       }
     } catch (e) {
-      print('❌ Update expense error: $e');
       return ApiResponse.error(
         message: 'Network error: ${e.toString()}',
       );
@@ -188,14 +174,10 @@ class ExpenseService {
     try {
       final token = await _getToken();
       
-      print('📤 Delete expense: $id');
-      
       final response = await http.delete(
         Uri.parse('$baseUrl${AppConfig.expenseEndpoint}/$id'),
         headers: _getHeaders(token),
       );
-
-      print('📥 Delete expense response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         return ApiResponse.success(
@@ -207,7 +189,6 @@ class ExpenseService {
         );
       }
     } catch (e) {
-      print('❌ Delete expense error: $e');
       return ApiResponse.error(
         message: 'Network error: ${e.toString()}',
       );
@@ -227,8 +208,6 @@ class ExpenseService {
         Uri.parse('$baseUrl${AppConfig.expenseEndpoint}/all'),
         headers: _getHeaders(token),
       );
-
-      print('📥 Get expenses by date range response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -272,7 +251,6 @@ class ExpenseService {
         );
       }
     } catch (e) {
-      print('❌ Get expenses by date range error: $e');
       return ApiResponse.error(
         message: 'Network error: ${e.toString()}',
       );

@@ -29,8 +29,6 @@ class IncomeService {
         headers: _getHeaders(token),
       );
 
-      print('📥 Get incomes response: ${response.statusCode}');
-      print('📦 Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -50,7 +48,6 @@ class IncomeService {
               try {
                 return Income.fromJson(json);
               } catch (e) {
-                print('❌ Error parsing income: $e');
                 return null;
               }
             })
@@ -67,7 +64,6 @@ class IncomeService {
         );
       }
     } catch (e) {
-      print('❌ Get incomes error: $e');
       return ApiResponse.error(
         message: 'Network error: ${e.toString()}',
       );
@@ -94,7 +90,6 @@ class IncomeService {
         'date': date.toIso8601String().split('T')[0], // Send as YYYY-MM-DD
       };
 
-      print('📤 Add income request: $requestBody');
 
       final response = await http.post(
         Uri.parse('$baseUrl${AppConfig.incomeEndpoint}'),
@@ -102,8 +97,6 @@ class IncomeService {
         body: jsonEncode(requestBody),
       );
 
-      print('📥 Add income response: ${response.statusCode}');
-      print('📦 Response body: ${response.body}');
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -124,7 +117,6 @@ class IncomeService {
         );
       }
     } catch (e) {
-      print('❌ Add income error: $e');
       return ApiResponse.error(
         message: 'Network error: ${e.toString()}',
       );
@@ -151,16 +143,12 @@ class IncomeService {
         'date': date.toIso8601String().split('T')[0],
       };
 
-      print('📤 Update income request: $requestBody');
 
       final response = await http.put(
         Uri.parse('$baseUrl${AppConfig.incomeEndpoint}/$id'),
         headers: _getHeaders(token),
         body: jsonEncode(requestBody),
       );
-
-      print('📥 Update income response: ${response.statusCode}');
-      print('📦 Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -178,7 +166,6 @@ class IncomeService {
         );
       }
     } catch (e) {
-      print('❌ Update income error: $e');
       return ApiResponse.error(
         message: 'Network error: ${e.toString()}',
       );
@@ -189,15 +176,12 @@ class IncomeService {
   Future<ApiResponse<void>> deleteIncome(String id) async {
     try {
       final token = await _getToken();
-      
-      print('📤 Delete income: $id');
-      
+            
       final response = await http.delete(
         Uri.parse('$baseUrl${AppConfig.incomeEndpoint}/$id'),
         headers: _getHeaders(token),
       );
 
-      print('📥 Delete income response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         return ApiResponse.success(
@@ -209,7 +193,6 @@ class IncomeService {
         );
       }
     } catch (e) {
-      print('❌ Delete income error: $e');
       return ApiResponse.error(
         message: 'Network error: ${e.toString()}',
       );
@@ -228,8 +211,6 @@ class IncomeService {
         Uri.parse('$baseUrl${AppConfig.incomeEndpoint}/all'),
         headers: _getHeaders(token),
       );
-
-      print('📥 Get incomes by date range response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -273,7 +254,6 @@ class IncomeService {
         );
       }
     } catch (e) {
-      print('❌ Get incomes by date range error: $e');
       return ApiResponse.error(
         message: 'Network error: ${e.toString()}',
       );

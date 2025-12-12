@@ -14,9 +14,7 @@ class Stats {
     required this.monthlyData,
   });
 
-  factory Stats.fromJson(Map<String, dynamic> json) {
-    print('📊 Parsing Stats from JSON: $json');
-    
+  factory Stats.fromJson(Map<String, dynamic> json) {    
     // Parse category breakdown safely
     List<CategoryExpense> categories = [];
     if (json['categoryBreakdown'] != null) {
@@ -40,8 +38,6 @@ class Stats {
     final expense = _safeDouble(json['expense']);
     final balance = _safeDouble(json['balance']);
 
-    print('✅ Parsed - Income: ₹${income.toStringAsFixed(2)}, Expense: ₹${expense.toStringAsFixed(2)}, Balance: ₹${balance.toStringAsFixed(2)}');
-    print('✅ Categories: ${categories.length}, Monthly: ${monthly.length}');
 
     return Stats(
       totalIncome: income,
@@ -60,7 +56,6 @@ class Stats {
       try {
         return double.parse(value);
       } catch (e) {
-        print('⚠️ Error parsing double from string: $value');
         return 0.0;
       }
     }

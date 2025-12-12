@@ -1,3 +1,5 @@
+// lib/providers/income_provider.dart
+
 import 'package:flutter/material.dart';
 import '../models/income_model.dart';
 import '../services/income_service.dart';
@@ -52,7 +54,6 @@ class IncomeProvider with ChangeNotifier {
       }
     } catch (e) {
       _errorMessage = e.toString();
-      print('IncomeProvider getIncomes error: $e');
     }
 
     _isLoading = false;
@@ -100,7 +101,6 @@ class IncomeProvider with ChangeNotifier {
       }
     } catch (e) {
       _errorMessage = e.toString();
-      print('IncomeProvider addIncome error: $e');
       _isLoading = false;
       notifyListeners();
       return false;
@@ -146,7 +146,6 @@ class IncomeProvider with ChangeNotifier {
       }
     } catch (e) {
       _errorMessage = e.toString();
-      print('IncomeProvider updateIncome error: $e');
       _isLoading = false;
       notifyListeners();
       return false;
@@ -175,7 +174,6 @@ class IncomeProvider with ChangeNotifier {
       }
     } catch (e) {
       _errorMessage = e.toString();
-      print('IncomeProvider deleteIncome error: $e');
       _isLoading = false;
       notifyListeners();
       return false;
@@ -198,7 +196,6 @@ class IncomeProvider with ChangeNotifier {
       }
     } catch (e) {
       _errorMessage = e.toString();
-      print('IncomeProvider getIncomesByDateRange error: $e');
     }
 
     _isLoading = false;

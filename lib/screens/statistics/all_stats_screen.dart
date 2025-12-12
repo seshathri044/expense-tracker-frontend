@@ -8,6 +8,7 @@ import '../../providers/theme_provider.dart';
 import 'widgets/line_chart_widget.dart';
 import 'widgets/pie_chart_widget.dart';
 import 'widgets/bar_chart_widget.dart';
+import 'widgets/year_selector_widget.dart';
 
 class AllStatsScreen extends StatefulWidget {
   const AllStatsScreen({super.key});
@@ -25,19 +26,44 @@ class _AllStatsScreenState extends State<AllStatsScreen> {
     });
   }
 
-  Future<void> _loadYearReport() async {
+  /// 🔥 FIXED: Loads ALL expenses and incomes (not just 200)
+  Future<void> _loadYearReport({int? year}) async {
     final expenseProvider = Provider.of<ExpenseProvider>(context, listen: false);
     final incomeProvider = Provider.of<IncomeProvider>(context, listen: false);
     final statisticsProvider = Provider.of<StatisticsProvider>(context, listen: false);
     
-    // Load expenses and incomes if not already loaded
-    await Future.wait([
-      if (expenseProvider.expenses.isEmpty) expenseProvider.getExpenses(page: 1, limit: 200),
-      if (incomeProvider.incomes.isEmpty) incomeProvider.getIncomes(page: 1, limit: 200),
-    ]);
+    try {
+      // ✅ CRITICAL FIX: Load ALL data with high limit to ensure we get historical data
+      // If you have more than 1000 records, increase this limit
+      const maxLimit = 1000;
+      
+      await Future.wait([
+        // Always reload to ensure we have latest data
+        expenseProvider.getExpenses(page: 1, limit: maxLimit),
+        incomeProvider.getIncomes(page: 1, limit: maxLimit),
+      ]);
+      
+      //print('📊 Loaded ${expenseProvider.expenses.length} expenses and ${incomeProvider.incomes.length} incomes');
+      
+      // Then calculate year report for specified year
+      await statisticsProvider.loadYearReport(
+        incomeProvider.incomes,
+        expenseProvider.expenses,
+        year: year,
+      );
+    } catch (e) {
+      print('❌ Error loading year report: $e');
+    }
+  }
+
+  void _onYearSelected(int year) {
+    final expenseProvider = Provider.of<ExpenseProvider>(context, listen: false);
+    final incomeProvider = Provider.of<IncomeProvider>(context, listen: false);
+    final statisticsProvider = Provider.of<StatisticsProvider>(context, listen: false);
     
-    // Then calculate year report
-    await statisticsProvider.loadYearReport(
+    // Year change uses already loaded data - no need to fetch again
+    statisticsProvider.changeYear(
+      year,
       incomeProvider.incomes,
       expenseProvider.expenses,
     );
@@ -68,13 +94,17 @@ class _AllStatsScreenState extends State<AllStatsScreen> {
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          'Year Report ${DateTime.now().year}',
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 22,
-            color: isDarkMode ? AppTheme.darkTextPrimary : AppTheme.textPrimary,
-          ),
+        title: Consumer<StatisticsProvider>(
+          builder: (context, provider, child) {
+            return Text(
+              'Year Report ${provider.selectedYear}',
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 22,
+                color: isDarkMode ? AppTheme.darkTextPrimary : AppTheme.textPrimary,
+              ),
+            );
+          },
         ),
         actions: [
           IconButton(
@@ -173,7 +203,7 @@ class _AllStatsScreenState extends State<AllStatsScreen> {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          'Year ${DateTime.now().year}',
+                          'Year ${provider.selectedYear}',
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w800,
@@ -195,7 +225,14 @@ class _AllStatsScreenState extends State<AllStatsScreen> {
                   
                   const SizedBox(height: 24),
 
-                  // ✅ FIXED ORDER: Pie Chart First
+                  // ✅ YEAR SELECTOR - Shows all available years from user's data
+                  YearSelectorWidget(
+                    selectedYear: provider.selectedYear,
+                    availableYears: provider.availableYears,
+                    onYearSelected: _onYearSelected,
+                  ),
+
+                  // ✅ Pie Chart First
                   PieChartWidget(categories: provider.yearCategories),
 
                   const SizedBox(height: 24),

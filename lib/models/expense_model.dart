@@ -30,8 +30,6 @@ class Expense {
         createdAt: _safeDate(json['createdAt'] ?? json['date']),
       );
     } catch (e) {
-      print('❌ Error parsing Expense: $e');
-      print('JSON data: $json');
       rethrow;
     }
   }
@@ -63,7 +61,6 @@ class Expense {
         }
         return DateTime.parse(value);
       } catch (e) {
-        print('Error parsing date: $value');
         return DateTime.now();
       }
     }

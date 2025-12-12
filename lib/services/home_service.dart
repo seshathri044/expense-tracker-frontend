@@ -31,7 +31,6 @@ class HomeService {
         headers: _getHeaders(token),
       );
 
-      print('🏠 Home response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -48,7 +47,6 @@ class HomeService {
         );
       }
     } catch (e) {
-      print('❌ Home service error: $e');
       return ApiResponse.error(
         message: 'Network error: ${e.toString()}',
       );

@@ -33,35 +33,29 @@ class HomeProvider with ChangeNotifier {
     _errorMessage = null;
     notifyListeners();
 
-    try {
-      print('🏠 Loading home data...');
-      
+    try {      
       // Get ALL-TIME stats from backend
       final statsResponse = await _homeService.getHomeData();
       
       if (statsResponse.success && statsResponse.data != null) {
         _allTimeStats = statsResponse.data!;
-        print('✅ All-time stats loaded: ₹${_allTimeStats.totalIncome} income');
       }
 
       // Calculate THIS MONTH summary
       final monthResponse = await _homeService.getThisMonthSummary(incomes, expenses);
       if (monthResponse.success && monthResponse.data != null) {
         _monthSummary = monthResponse.data!;
-        print('✅ Month summary: ₹${_monthSummary['income']} income');
       }
 
       // Get TOP 3 categories for current month
       final top3Response = await _homeService.getTop3Categories(expenses);
       if (top3Response.success && top3Response.data != null) {
         _top3Categories = top3Response.data!;
-        print('✅ Top 3 categories loaded: ${_top3Categories.length}');
       }
 
       _errorMessage = null;
     } catch (e) {
       _errorMessage = 'Error loading home data: ${e.toString()}';
-      print('❌ HomeProvider error: $e');
     }
 
     _isLoading = false;

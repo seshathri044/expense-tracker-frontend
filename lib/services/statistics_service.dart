@@ -75,7 +75,7 @@ class StatisticsService {
       // Sort by amount (highest first)
       categories.sort((a, b) => b.amount.compareTo(a.amount));
 
-      print('✅ This month stats: ${categories.length} categories, ₹$totalExpense total');
+  
 
       return ApiResponse.success(
         message: 'Month statistics loaded',
@@ -85,33 +85,32 @@ class StatisticsService {
         },
       );
     } catch (e) {
-      print('❌ Statistics service error: $e');
       return ApiResponse.error(
         message: 'Error loading statistics: ${e.toString()}',
       );
     }
   }
 
-  /// 📈 YEAR REPORT DATA (Current Year Jan-Dec)
-  /// Filters current year data from /api/stats response
+  /// 📈 YEAR REPORT DATA (Specific Year Jan-Dec)
+  /// Filters specific year data with optional year parameter
   Future<ApiResponse<Map<String, dynamic>>> getYearReportData(
     List incomes,
-    List expenses,
-  ) async {
+    List expenses, {
+    int? year,
+  }) async {
     try {
-      final now = DateTime.now();
-      final currentYear = now.year;
-
-      // Filter current year data only
+      final targetYear = year ?? DateTime.now().year;
+      
+      // Filter specific year data only
       final yearIncomes = incomes.where((income) =>
-        income.date.year == currentYear
+        income.date.year == targetYear
       ).toList();
 
       final yearExpenses = expenses.where((expense) =>
-        expense.date.year == currentYear
+        expense.date.year == targetYear
       ).toList();
 
-      // Generate monthly data for current year (Jan-Dec)
+      // Generate monthly data for specified year (Jan-Dec)
       final monthlyData = <MonthlyData>[];
       final monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
                          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -172,7 +171,6 @@ class StatisticsService {
 
       categories.sort((a, b) => b.amount.compareTo(a.amount));
 
-      print('✅ Year report: ${monthlyData.length} months, ${categories.length} categories');
 
       return ApiResponse.success(
         message: 'Year report loaded',
@@ -184,7 +182,6 @@ class StatisticsService {
         },
       );
     } catch (e) {
-      print('❌ Year report error: $e');
       return ApiResponse.error(
         message: 'Error loading year report: ${e.toString()}',
       );

@@ -1,3 +1,5 @@
+// lib/services/auth_service.dart
+
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/app_config.dart';
@@ -20,9 +22,6 @@ class AuthService {
         requiresAuth: false,
       );
 
-      print('📥 Register response: ${response.statusCode}');
-      print('📦 Register body: ${response.body}');
-
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 201 || response.statusCode == 200) {
@@ -31,7 +30,6 @@ class AuthService {
         throw Exception(data['message'] ?? 'Registration failed');
       }
     } catch (e) {
-      print('❌ Register error: $e');
       throw Exception(_cleanErrorMessage(e.toString()));
     }
   }
@@ -45,7 +43,6 @@ class AuthService {
         requiresAuth: false,
       );
 
-      print('📥 Send OTP response: ${response.statusCode}');
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 200 && data['success'] == true) {
@@ -70,9 +67,6 @@ class AuthService {
         requiresAuth: false,
       );
 
-      print('📥 Verify OTP response: ${response.statusCode}');
-      print('📦 Verify OTP body: ${response.body}');
-
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 200 && data['success'] == true) {
@@ -86,15 +80,12 @@ class AuthService {
           final prefs = await SharedPreferences.getInstance();
           await prefs.setString(AppConfig.userNameKey, name);
           await prefs.setString(AppConfig.userEmailKey, email);
-          
-          print('✅ Saved user data - Name: $name, Email: $email');
         }
         return AuthResponse.fromJson(data);
       } else {
         throw Exception(data['message'] ?? 'Invalid OTP');
       }
     } catch (e) {
-      print('❌ Verify OTP error: $e');
       throw Exception(_cleanErrorMessage(e.toString()));
     }
   }
@@ -111,9 +102,6 @@ class AuthService {
         requiresAuth: false,
       );
 
-      print('📥 Login response: ${response.statusCode}');
-      print('📦 Login body: ${response.body}');
-
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
@@ -127,8 +115,6 @@ class AuthService {
           final prefs = await SharedPreferences.getInstance();
           await prefs.setString(AppConfig.userNameKey, name);
           await prefs.setString(AppConfig.userEmailKey, data['email'] ?? email);
-          
-          print('✅ Login successful - Name: $name, Email: ${data['email'] ?? email}');
         }
         
         return AuthResponse.fromJson(data);
@@ -136,7 +122,6 @@ class AuthService {
         throw Exception(data['message'] ?? 'Login failed');
       }
     } catch (e) {
-      print('❌ Login error: $e');
       throw Exception(_cleanErrorMessage(e.toString()));
     }
   }
@@ -153,12 +138,9 @@ class AuthService {
       final decoded = utf8.decode(base64Url.decode(normalized));
       final Map<String, dynamic> payloadMap = jsonDecode(decoded);
 
-      print('🔓 JWT Payload: $payloadMap');
-
       // Extract name (might be in 'name' or 'sub' field)
       return payloadMap['name'] ?? payloadMap['sub'];
     } catch (e) {
-      print('⚠️ Failed to decode JWT: $e');
       return null;
     }
   }

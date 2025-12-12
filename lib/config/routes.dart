@@ -15,7 +15,6 @@ import '../screens/transactions/all_transaction_screen.dart';
 import '../screens/statistics/statistics_screen.dart'; // ✅ Month Stats
 import '../screens/statistics/all_stats_screen.dart'; // ✅ Year Report
 import '../screens/profile/profile_screen.dart';
-
 class AppRoutes {
   // 🔐 Auth Routes
   static const String splash = '/';
@@ -38,7 +37,6 @@ class AppRoutes {
 
   // 📊 Transaction Routes
   static const String allTransactions = '/all-transactions';
-
   // 📈 Statistics Routes
   static const String statistics = '/statistics'; // ✅ This Month (used by bottom nav)
   static const String allStats = '/all-stats'; // ✅ Year Report (used by profile)

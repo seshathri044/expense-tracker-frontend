@@ -18,10 +18,8 @@ migrate_working_dir/
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# VS Code
+.vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -43,3 +41,66 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# ============================================
+# 🔒 SECURITY: Environment & Secret Files
+# ============================================
+
+# Flutter Environment Files (DON'T COMMIT PRODUCTION CONFIGS)
+lib/config/environment.dart
+lib/config/environment.production.dart
+lib/config/environment.staging.dart
+
+# Backend Environment Files
+backend/.env
+backend/.env.local
+backend/.env.production
+backend/.env.staging
+backend/application-prod.properties
+
+# API Keys & Secrets
+**/secrets.json
+**/api_keys.dart
+**/firebase_options.dart
+google-services.json
+GoogleService-Info.plist
+
+# Keystore files (Android)
+*.jks
+*.keystore
+key.properties
+
+# iOS Provisioning Profiles & Certificates
+*.mobileprovision
+*.p12
+*.cer
+
+# ============================================
+# Build & Distribution Files
+# ============================================
+
+# Android builds
+*.apk
+*.aab
+android/app/release/
+
+# iOS builds
+*.ipa
+ios/build/
+ios/Runner.app
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+
+# macOS
+macos/Flutter/ephemeral/
+
+# Linux
+linux/flutter/ephemeral/
+
+# Windows
+windows/flutter/ephemeral/
+
+# Web
+web/firebase-config.js

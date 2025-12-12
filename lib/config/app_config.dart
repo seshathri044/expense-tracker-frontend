@@ -1,6 +1,8 @@
+import 'environment.dart';
+
 class AppConfig {
-  // 🔥 CRITICAL FIX: Added /api context path from Spring Boot
-  static const String baseUrl = 'http://localhost:8080/api';
+  // Use Environment baseUrl
+  static String get baseUrl => Environment.baseUrl;
   
   // API Endpoints (these are appended to baseUrl)
   static const String authEndpoint = '';
@@ -8,13 +10,23 @@ class AppConfig {
   static const String incomeEndpoint = '/income';
   static const String statsEndpoint = '/stats';
   
+  // Full URLs for convenience
+  static String get authUrl => '$baseUrl$authEndpoint';
+  static String get expenseUrl => '$baseUrl$expenseEndpoint';
+  static String get incomeUrl => '$baseUrl$incomeEndpoint';
+  static String get statsUrl => '$baseUrl$statsEndpoint';
+  
   // Storage Keys
-  static const String tokenKey = 'auth_token';
-  static const String userIdKey = 'user_id';
-  static const String userNameKey = 'user_name';
-  static const String userEmailKey = 'user_email';
+  static String get tokenKey => Environment.tokenKey;
+  static String get userIdKey => Environment.userIdKey;
+  static String get userNameKey => Environment.userNameKey;
+  static String get userEmailKey => Environment.userEmailKey;
   
   // App Settings
-  static const String appName = 'Expense Tracker';
-  static const int sessionTimeout = 30; // minutes
+  static String get appName => Environment.appName;
+  static int get sessionTimeout => Environment.sessionTimeout;
+  static int get requestTimeout => Environment.requestTimeout;
+  
+  // Debug
+  static bool get enableLogging => Environment.enableLogging;
 }
