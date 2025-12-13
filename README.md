@@ -419,13 +419,14 @@ Contributions are welcome! Please follow these steps:
 
 ## 📸 Screenshots
 
-> Add screenshots of your app here:
-- Login/Registration screens
-- Dashboard with statistics  
-- Expense list and add expense forms
-- Income tracking screens
-- Analytics and reports
-- User profile
+<img width="1920" height="1020" alt="Screenshot 2025-12-13 131637" src="https://github.com/user-attachments/assets/b677e5c6-e484-446a-8b3a-eb3023b99f8e" />
+<img width="1920" height="1020" alt="Screenshot 2025-12-13 131854" src="https://github.com/user-attachments/assets/9030e6b1-3e3f-41d6-a1b4-d05e08319ddc" />
+<img width="1920" height="1020" alt="Screenshot 2025-12-13 131908" src="https://github.com/user-attachments/assets/67ecfaed-9e7d-46cc-8952-1ae33122dd01" />
+<img width="1920" height="1020" alt="Screenshot 2025-12-13 131919" src="https://github.com/user-attachments/assets/8e9e0c8f-f031-44c0-861c-75d5f32a6174" />
+<img width="1920" height="1020" alt="Screenshot 2025-12-13 131940" src="https://github.com/user-attachments/assets/f12779d3-b1c4-41d2-aaa9-5e29a05e32f7" />
+<img width="1920" height="1020" alt="Screenshot 2025-12-13 131958" src="https://github.com/user-attachments/assets/1b16a37c-5072-4b89-917d-66360dff89e5" />
+<img width="1920" height="1020" alt="Screenshot 2025-12-13 132007" src="https://github.com/user-attachments/assets/fb7f62d0-04e8-4265-a728-5cbe0935ec0e" />
+<img width="1920" height="1020" alt="Screenshot 2025-12-13 132025" src="https://github.com/user-attachments/assets/3e5f4468-77d2-4af4-b47c-0452567039b7" />
 
 ## 🔐 Security Considerations
 
