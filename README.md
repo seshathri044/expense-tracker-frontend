@@ -9,38 +9,30 @@ A beautiful and intuitive Flutter mobile application for personal finance manage
 * 👤 User registration and login
 * 🔄 Automatic token refresh
 * 🔒 Secure credential storage
-* 📱 Biometric authentication support
-
+  
 ### Expense Management
 * ➕ Create, edit, and delete expenses
 * 🏷️ Categorize expenses with custom categories
 * 📊 Visual spending patterns
 * 🔍 Advanced search and filtering
 * 📅 Calendar-based expense tracking
-* 📸 Receipt photo attachments
 * 💳 Multiple payment method tracking
 
 ### Income Management
 * 💵 Record and track income transactions
 * 📈 Multiple income source management
 * 📊 Income analytics and visualization
-* 🔄 Recurring income support
 
 ### Statistics & Analytics
 * 📊 Interactive charts and graphs
 * 📉 Spending trends visualization
 * 💹 Income vs Expense comparison
 * 📅 Monthly and yearly reports
-* 🎯 Budget tracking and alerts
 * 📈 Category-wise breakdown
 
 ### User Profile
 * 👤 Profile management
-* ⚙️ Customizable settings
 * 🌓 Dark/Light theme support
-* 🔔 Notification preferences
-* 💱 Multi-currency support
-
 ## 🛠️ Tech Stack
 
 ### Framework & Language
