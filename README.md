@@ -1,261 +1,454 @@
-# 💰 ExpenseTracker Flutter Frontend
+# 💰 ExpenseTracker - Flutter Frontend
 
-A beautiful and intuitive Flutter mobile application for personal finance management. Track expenses, manage income, view real-time analytics, and take control of your finances with a modern, user-friendly interface.
+A production-ready Flutter mobile application for comprehensive personal finance management. Built with Provider state management, JWT authentication, and seamless integration with Spring Boot REST API backend for real-time expense tracking, income management, and financial analytics.
 
-## ✨ Features
+> **Backend Repository**: [ExpenseTracker Spring Boot API](https://github.com/seshathri044/expense-tracker-backend)
 
-### Authentication & Authorization
-* 🔐 JWT-based authentication
-* 👤 User registration and login
-* 🔄 Automatic token refresh
-* 🔒 Secure credential storage
-  
-### Expense Management
-* ➕ Create, edit, and delete expenses
-* 🏷️ Categorize expenses with custom categories
-* 📊 Visual spending patterns
-* 🔍 Advanced search and filtering
-* 📅 Calendar-based expense tracking
-* 💳 Multiple payment method tracking
+## ✨ Key Features
 
-### Income Management
-* 💵 Record and track income transactions
-* 📈 Multiple income source management
-* 📊 Income analytics and visualization
+### 🔐 Authentication & Security
+- **JWT Token Authentication** - Secure stateless authentication
+- **Email OTP Verification** - Two-step registration process
+- **Password Reset Flow** - Email-based OTP password recovery  
+- **Secure Token Storage** - Encrypted credential management with SharedPreferences
+- **Auto Token Refresh** - Seamless session management
 
-### Statistics & Analytics
-* 📊 Interactive charts and graphs
-* 📉 Spending trends visualization
-* 💹 Income vs Expense comparison
-* 📅 Monthly and yearly reports
-* 📈 Category-wise breakdown
+### 💸 Expense Management
+- **CRUD Operations** - Create, read, update, and delete expenses
+- **Category Organization** - Organize expenses by customizable categories
+- **Date-Based Tracking** - Track expenses with precise date filtering
+- **Detailed Descriptions** - Add notes and descriptions to each expense
+- **Real-Time Updates** - Instant UI updates using Provider state management
 
-### User Profile
-* 👤 Profile management
-* 🌓 Dark/Light theme support
+### 💵 Income Tracking
+- **Multiple Income Sources** - Track income from various sources
+- **Income Categories** - Categorize income (salary, freelance, investments, etc.)
+- **Historical Records** - Complete income history with date filtering
+- **Income vs Expense Analysis** - Compare earnings against spending
+
+### 📊 Statistics & Analytics
+- **All-Time Overview** - Total income, expenses, and balance summary
+- **Monthly Reports** - Current month income/expense breakdown
+- **Top 3 Categories** - See your highest spending categories
+- **Yearly Analysis** - Month-by-month trends for any selected year
+- **Category Breakdown** - Detailed spending analysis by category with percentages
+- **Visual Charts** - Interactive data visualization (ready for chart integration)
+
+### 👤 User Profile
+- **Profile Management** - View and update user information
+- **Account Settings** - Manage account preferences
+- **Secure Logout** - Clean token removal and session termination
+
 ## 🛠️ Tech Stack
 
-### Framework & Language
-* **Flutter 3.x** - Cross-platform framework
-* **Dart 3.x** - Programming language
+### Core Framework
+- **Flutter 3.x** - Google's UI toolkit for cross-platform development
+- **Dart 3.x** - Modern, type-safe programming language
 
 ### State Management
-* **Provider** / **Riverpod** - State management solution
-* **BLoC Pattern** - Business logic component architecture
+- **Provider 6.0+** - Lightweight, powerful state management solution
+- **ChangeNotifier** - Reactive state updates across the app
 
-### UI/UX
-* **Material Design 3** - Modern UI components
-* **Custom animations** - Smooth transitions
-* **Responsive design** - Adaptive layouts
+### Backend Integration  
+- **HTTP Package** - RESTful API communication
+- **Spring Boot REST API** - Production backend with JWT security
+- **MySQL Database** - Persistent data storage
 
-### Data & Storage
-* **HTTP/Dio** - API communication
-* **SharedPreferences** - Local data persistence
-* **Secure Storage** - Encrypted credential storage
-* **Hive** / **SQLite** - Local database
+### Local Storage
+- **SharedPreferences** - Token and user data persistence
+- **Secure Storage** - Encrypted credential storage
 
-### Additional Libraries
-* **fl_chart** - Beautiful charts and graphs
-* **intl** - Internationalization and date formatting
-* **image_picker** - Receipt photo capture
-* **camera** - Direct camera access
-* **permission_handler** - Runtime permissions
+### API Service Architecture
+- **ApiService** - Centralized HTTP request handler
+- **AuthService** - Authentication and user management
+- **ExpenseService** - Expense CRUD operations
+- **IncomeService** - Income management  
+- **HomeService** - Dashboard data aggregation
+- **StatisticsService** - Analytics and reporting
 
 ## 📋 Prerequisites
 
-Before you begin, ensure you have the following installed:
+Ensure you have the following installed:
 
-* Flutter SDK (3.0.0 or higher)
-* Dart SDK (3.0.0 or higher)
-* Android Studio / Xcode (for mobile development)
-* Git
+- **Flutter SDK** - Version 3.0.0 or higher ([Install Flutter](https://docs.flutter.dev/get-started/install))
+- **Dart SDK** - Version 3.0.0 or higher (bundled with Flutter)
+- **Android Studio** / **VS Code** - With Flutter and Dart plugins
+- **Git** - For version control
+- **Backend API** - [ExpenseTracker Spring Boot Backend](https://github.com/seshathri044/expense-tracker-backend) running on your server
 
-## 🚀 Getting Started
+## 🚀 Installation & Setup
 
-### Installation
-
-1. **Clone the repository**
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/seshathri044/expense-tracker-frontend.git
 cd expense-tracker-frontend
 ```
 
-2. **Install dependencies**
+### 2. Install Dependencies
 ```bash
 flutter pub get
 ```
 
-3. **Configure API endpoint**
+### 3. Configure Backend URL
 
-Create a `.env` file in the root directory:
-```env
-API_BASE_URL=http://your-backend-url:8080/api
-```
+Edit `lib/config/app_config.dart` and update the base URL:
 
-Or update the configuration in `lib/config/api_config.dart`:
 ```dart
-class ApiConfig {
-  static const String baseUrl = 'http://your-backend-url:8080/api';
+class AppConfig {
+  // Update this to your backend URL
+  static const String baseUrl = 'http://YOUR_BACKEND_IP:8080/api';
+  
+  // Or for production
+  static const String baseUrl = 'https://your-domain.com/api';
+  
+  // ... rest of configuration
 }
 ```
 
-4. **Run the app**
+**Important**: 
+- For Android emulator: Use `http://10.0.2.2:8080/api`
+- For iOS simulator: Use `http://localhost:8080/api`
+- For physical devices: Use your computer's local IP (e.g., `http://192.168.1.100:8080/api`)
+
+### 4. Run the Application
+
 ```bash
-# For Android
+# Check available devices
+flutter devices
+
+# Run on connected device
 flutter run
 
-# For iOS
-flutter run
-
-# For a specific device
+# Run on specific device
 flutter run -d <device-id>
+
+# Run in debug mode with hot reload
+flutter run --debug
+
+# Run in release mode (optimized)
+flutter run --release
 ```
 
-### Build for Production
+## 📱 Build for Production
 
-**Android APK**
+### Android APK
 ```bash
+# Build release APK
 flutter build apk --release
+
+# Build split APKs by ABI (smaller file size)
+flutter build apk --split-per-abi
+
+# Output location: build/app/outputs/flutter-apk/
 ```
 
-**Android App Bundle**
+### Android App Bundle (Recommended for Play Store)
 ```bash
 flutter build appbundle --release
+
+# Output location: build/app/outputs/bundle/release/
 ```
 
-**iOS**
+### iOS (macOS required)
 ```bash
+# Build release IPA
 flutter build ios --release
+
+# Or build with Xcode
+open ios/Runner.xcworkspace
+# Then use Xcode to archive and export
 ```
 
-## 📱 Screenshots
-
-### Authentication
-* Login Screen
-* Registration Screen
-* Splash Screen
-
-### Dashboard
-* Home Screen with overview
-* Interactive charts
-* Quick actions
-
-### Expense Management
-* Expense list view
-* Add/Edit expense form
-* Expense details
-
-### Analytics
-* Statistics dashboard
-* Monthly reports
-* Category breakdown
-
-## 🏗️ Project Structure
+## 📂 Project Structure
 
 ```
 lib/
-├── config/              # Configuration files
-│   ├── api_config.dart
-│   ├── theme_config.dart
-│   └── routes.dart
-├── models/              # Data models
-│   ├── expense.dart
-│   ├── income.dart
-│   ├── user.dart
-│   └── statistics.dart
-├── providers/           # State management
-│   ├── auth_provider.dart
-│   ├── expense_provider.dart
-│   ├── income_provider.dart
-│   └── statistics_provider.dart
-├── screens/             # UI screens
-│   ├── auth/
-│   ├── expense/
-│   ├── income/
-│   ├── home/
-│   ├── profile/
-│   ├── statistics/
-│   ├── transactions/
-│   ├── onboarding/
-│   └── splash/
-├── services/            # API services
-│   ├── api_service.dart
-│   ├── auth_service.dart
-│   ├── expense_service.dart
-│   ├── income_service.dart
-│   └── storage_service.dart
-├── widgets/             # Reusable widgets
-│   ├── common/
-│   ├── charts/
-│   └── forms/
-├── utils/               # Utility functions
-│   ├── constants.dart
-│   ├── validators.dart
-│   └── helpers.dart
-└── main.dart            # Entry point
+├── config/                    # Configuration files
+│   └── app_config.dart       # API endpoints and app constants
+│
+├── models/                    # Data models
+│   ├── user_models.dart      # User and AuthResponse models
+│   ├── expense_model.dart    # Expense data model
+│   ├── income_model.dart     # Income data model  
+│   ├── stats_model.dart      # Statistics and analytics models
+│   └── api_response.dart     # Generic API response wrapper
+│
+├── providers/                 # State management (Provider)
+│   ├── auth_provider.dart    # Authentication state
+│   ├── expense_provider.dart # Expense state management
+│   ├── income_provider.dart  # Income state management
+│   └── stats_provider.dart   # Statistics state
+│
+├── screens/                   # UI screens
+│   ├── auth/                 # Authentication screens
+│   │   ├── login_screen.dart
+│   │   ├── register_screen.dart
+│   │   ├── otp_verification_screen.dart
+│   │   └── forgot_password_screen.dart
+│   ├── home/                 # Dashboard
+│   │   └── home_screen.dart
+│   ├── expense/              # Expense management
+│   │   ├── expense_list_screen.dart
+│   │   ├── add_expense_screen.dart
+│   │   └── edit_expense_screen.dart
+│   ├── income/               # Income management
+│   │   ├── income_list_screen.dart
+│   │   ├── add_income_screen.dart
+│   │   └── edit_income_screen.dart
+│   ├── statistics/           # Analytics & reports
+│   │   ├── statistics_screen.dart
+│   │   └── year_report_screen.dart
+│   ├── profile/              # User profile
+│   │   └── profile_screen.dart
+│   └── splash/               # App initialization
+│       └── splash_screen.dart
+│
+├── services/                  # Backend API services
+│   ├── api_service.dart      # Base HTTP client
+│   ├── storage_service.dart  # Local storage wrapper
+│   ├── auth_service.dart     # Authentication API calls
+│   ├── expense_service.dart  # Expense API calls
+│   ├── income_service.dart   # Income API calls
+│   ├── home_service.dart     # Dashboard data API
+│   └── statistics_service.dart # Analytics API calls
+│
+├── widgets/                   # Reusable widgets
+│   ├── common/               # Common UI components
+│   ├── charts/               # Chart widgets
+│   └── forms/                # Form components
+│
+├── utils/                     # Utility functions
+│   ├── constants.dart        # App-wide constants
+│   ├── validators.dart       # Input validation
+│   ├── date_formatter.dart   # Date utilities
+│   └── currency_formatter.dart # Currency formatting
+│
+└── main.dart                  # Application entry point
 ```
 
-## 🔧 Configuration
+## 🔌 API Integration
 
-### API Integration
+The app communicates with the Spring Boot backend through these main services:
 
-The app connects to the [ExpenseTracker Backend API](https://github.com/seshathri044/expense-tracker-backend). Ensure the backend is running before using the app.
+### Authentication Endpoints
+```
+POST   /api/register          - Register new user
+POST   /api/send-otp          - Send email OTP
+POST   /api/verify-otp        - Verify OTP and activate account
+POST   /api/login             - User login
+POST   /api/send-reset-otp    - Password reset OTP
+POST   /api/reset-password    - Reset password with OTP
+GET    /api/profile           - Get user profile
+POST   /api/logout            - Logout user
+```
 
-### Theme Customization
+### Expense Endpoints
+```
+GET    /api/expense/all       - Get all expenses
+POST   /api/expense           - Create new expense
+PUT    /api/expense/:id       - Update expense
+DELETE /api/expense/:id       - Delete expense
+```
 
-Edit `lib/config/theme_config.dart` to customize colors, fonts, and styling:
+### Income Endpoints  
+```
+GET    /api/income/all        - Get all incomes
+POST   /api/income            - Create new income
+PUT    /api/income/:id        - Update income
+DELETE /api/income/:id        - Delete income
+```
 
+### Statistics Endpoints
+```
+GET    /api/stats             - Get all-time statistics
+```
+
+## 🔑 Key Implementation Details
+
+### JWT Token Management
+- Tokens are extracted and stored after login/verification
+- Username is decoded from JWT payload for display
+- Tokens are automatically attached to authenticated requests
+- Secure logout clears all stored credentials
+
+### State Management with Provider
 ```dart
-class AppTheme {
-  static ThemeData lightTheme = ThemeData(
-    primaryColor: Colors.blue,
-    // ... other theme properties
-  );
+// Example: Expense Provider usage
+class ExpenseProvider extends ChangeNotifier {
+  List<Expense> _expenses = [];
+  
+  Future<void> loadExpenses() async {
+    final response = await ExpenseService().getExpenses();
+    if (response.success) {
+      _expenses = response.data!;
+      notifyListeners(); // Triggers UI rebuild
+    }
+  }
 }
 ```
 
+### Error Handling
+- All API calls wrapped in try-catch blocks
+- User-friendly error messages
+- Network error detection and reporting
+- Response validation before data parsing
+
+### Date Handling  
+- Dates stored in ISO 8601 format (YYYY-MM-DD)
+- Client-side date filtering for range queries
+- Timezone-aware date comparisons
+
 ## 🧪 Testing
 
-Run tests using:
-
+### Run Unit Tests
 ```bash
-# Run all tests
 flutter test
+```
 
-# Run with coverage
-flutter test --coverage
+### Run Widget Tests
+```bash
+flutter test test/widget_test.dart
+```
 
-# Run integration tests
+### Run Integration Tests
+```bash
 flutter drive --target=test_driver/app.dart
+```
+
+### Generate Coverage Report
+```bash
+flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html
+open coverage/html/index.html
+```
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**1. Cannot connect to backend**
+```
+Error: SocketException: Failed to connect
+Solution: Check your app_config.dart baseUrl matches your backend server
+```
+
+**2. Token expired errors**
+```
+Error: 401 Unauthorized
+Solution: Logout and login again to refresh token
+```
+
+**3. Date parsing errors**
+```
+Error: FormatException: Invalid date format
+Solution: Ensure backend returns dates in YYYY-MM-DD format
+```
+
+**4. Flutter pub get fails**
+```bash
+# Clean and reinstall dependencies
+flutter clean
+flutter pub get
+```
+
+**5. Build errors on iOS**
+```bash
+# Clean iOS build
+cd ios
+pod deintegrate
+pod install
+cd ..
+flutter clean
+flutter build ios
 ```
 
 ## 📦 Dependencies
 
-Key dependencies used in this project:
+Key packages used in this project:
 
 ```yaml
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^6.0.0
-  dio: ^5.0.0
-  shared_preferences: ^2.0.0
-  flutter_secure_storage: ^8.0.0
-  fl_chart: ^0.63.0
-  intl: ^0.18.0
-  image_picker: ^1.0.0
-  permission_handler: ^11.0.0
+    
+  # State Management
+  provider: ^6.1.1
+  
+  # HTTP & API
+  http: ^1.1.0
+  
+  # Local Storage  
+  shared_preferences: ^2.2.2
+  
+  # UI Components
+  flutter_svg: ^2.0.9
+  google_fonts: ^6.1.0
+  
+  # Date & Time
+  intl: ^0.19.0
+  
+  # Charts (when implemented)
+  fl_chart: ^0.65.0
 ```
 
 ## 🤝 Contributing
 
 Contributions are welcome! Please follow these steps:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. **Fork the repository**
+2. **Create a feature branch**
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+3. **Commit your changes**
+   ```bash
+   git commit -m 'Add amazing feature'
+   ```
+4. **Push to the branch**
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+5. **Open a Pull Request**
+
+### Coding Guidelines
+- Follow Flutter's official style guide
+- Write meaningful commit messages
+- Add comments for complex logic
+- Update documentation for new features
+- Test thoroughly before submitting PR
+
+## 📸 Screenshots
+
+> Add screenshots of your app here:
+- Login/Registration screens
+- Dashboard with statistics  
+- Expense list and add expense forms
+- Income tracking screens
+- Analytics and reports
+- User profile
+
+## 🔐 Security Considerations
+
+- ✅ JWT tokens stored securely in SharedPreferences
+- ✅ Passwords never stored locally
+- ✅ HTTPS recommended for production
+- ✅ Token expiration handled gracefully
+- ✅ Input validation on all forms
+- ⚠️ Consider adding biometric authentication
+- ⚠️ Implement certificate pinning for production
+
+## 🚀 Future Enhancements
+
+- [ ] Receipt photo upload and OCR
+- [ ] Budget alerts and notifications
+- [ ] Recurring expenses/income
+- [ ] Multi-currency support
+- [ ] Export data to CSV/PDF
+- [ ] Biometric authentication
+- [ ] Dark mode theme
+- [ ] Offline mode with sync
+- [ ] Data backup to cloud
+- [ ] Expense categories customization
 
 ## 📄 License
 
@@ -264,24 +457,35 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Seshathri**
-* GitHub: [@seshathri044](https://github.com/seshathri044)
+- GitHub: [@seshathri044](https://github.com/seshathri044)
+- Repository: [expense-tracker-frontend](https://github.com/seshathri044/expense-tracker-frontend)
 
 ## 🔗 Related Projects
 
-* [ExpenseTracker Backend API](https://github.com/seshathri044/expense-tracker-backend) - Spring Boot REST API backend
+- **Backend API**: [ExpenseTracker Spring Boot Backend](https://github.com/seshathri044/expense-tracker-backend)
+  - Spring Boot 3.x
+  - Spring Security with JWT
+  - MySQL Database
+  - RESTful API
 
 ## 📞 Support
 
-If you have any questions or need help, please:
+If you encounter any issues or have questions:
 
-* Open an issue on GitHub
-* Contact via email
+1. Check the [Troubleshooting](#-troubleshooting) section
+2. Review existing [Issues](https://github.com/seshathri044/expense-tracker-frontend/issues)
+3. Open a new issue with detailed information
+4. Contact: [Open an issue on GitHub]
 
 ## 🙏 Acknowledgments
 
-* Flutter team for the amazing framework
-* All contributors and supporters of this project
+- Flutter team for the amazing framework
+- Provider package maintainers
+- Spring Boot backend team
+- All contributors and supporters
 
 ---
 
-Made with ❤️ using Flutter
+**Built with ❤️ using Flutter & Spring Boot**
+
+⭐ Star this repo if you find it helpful!
