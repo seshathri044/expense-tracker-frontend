@@ -35,8 +35,6 @@ A production-ready Flutter mobile application for comprehensive personal finance
 - **Visual Charts** - Interactive data visualization (ready for chart integration)
 
 ### 👤 User Profile
-- **Profile Management** - View and update user information
-- **Account Settings** - Manage account preferences
 - **Secure Logout** - Clean token removal and session termination
 
 ## 🛠️ Tech Stack
