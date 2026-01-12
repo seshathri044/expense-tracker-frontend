@@ -11,14 +11,12 @@ A production-ready Flutter mobile application for comprehensive personal finance
 - **Email OTP Verification** - Two-step registration process
 - **Password Reset Flow** - Email-based OTP password recovery  
 - **Secure Token Storage** - Encrypted credential management with SharedPreferences
-- **Auto Token Refresh** - Seamless session management
 
 ### 💸 Expense Management
 - **CRUD Operations** - Create, read, update, and delete expenses
 - **Category Organization** - Organize expenses by customizable categories
 - **Date-Based Tracking** - Track expenses with precise date filtering
 - **Detailed Descriptions** - Add notes and descriptions to each expense
-- **Real-Time Updates** - Instant UI updates using Provider state management
 
 ### 💵 Income Tracking
 - **Multiple Income Sources** - Track income from various sources
@@ -32,7 +30,7 @@ A production-ready Flutter mobile application for comprehensive personal finance
 - **Top 3 Categories** - See your highest spending categories
 - **Yearly Analysis** - Month-by-month trends for any selected year
 - **Category Breakdown** - Detailed spending analysis by category with percentages
-- **Visual Charts** - Interactive data visualization (ready for chart integration)
+- **Visual Charts** - Interactive data visualization
 
 ### 👤 User Profile
 - **Secure Logout** - Clean token removal and session termination
